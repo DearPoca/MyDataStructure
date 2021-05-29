@@ -12,21 +12,22 @@ namespace treeNodeColor {
 	vector<string> strs = { "Red","Black" };
 }
 
+template<class T>
 class redBlackTree {
 public:
-	int val;
+	T val;
 	redBlackTree* left;
 	redBlackTree* right;
 	treeNodeColor::Enum color;
 
-	redBlackTree(int val = INT_MIN, treeNodeColor::Enum color = treeNodeColor::Black) {
+	redBlackTree(T val = INT_MIN, treeNodeColor::Enum color = treeNodeColor::Black) {
 		this->val = val;
 		this->color = color;
 		this->left = nullptr;
 		this->right = nullptr;
 	}
 
-	void insert(int val) {
+	void insert(T val) {
 		this->right = insert(this->right, val);
 	}
 
@@ -38,7 +39,7 @@ public:
 		preorderTraversal(this->right);
 	}
 
-	void erase(int val) {
+	void erase(T val) {
 		bool flag = false;
 		redBlackTree* N = nullptr;
 		redBlackTree* t = this;
@@ -70,7 +71,7 @@ private:
 	}
 
 
-	redBlackTree* insert(redBlackTree* curNode, int val) {
+	redBlackTree* insert(redBlackTree* curNode, T val) {
 		using namespace treeNodeColor;
 
 		if (curNode == nullptr) {
@@ -135,7 +136,7 @@ private:
 		preorderTraversal(node->right);
 	}
 
-	redBlackTree* erase(redBlackTree* curNode, int val, redBlackTree*& parent, redBlackTree*& grandParent, bool& flag) {
+	redBlackTree* erase(redBlackTree* curNode, T val, redBlackTree*& parent, redBlackTree*& grandParent, bool& flag) {
 
 		bool needProcess = false;
 		using namespace treeNodeColor;

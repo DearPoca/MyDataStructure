@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
 	vector<int> nums = { 1,5,6,7,8,9,10,11,12,13,14,15,18,24,2,155,1642,4242,23,3 };
-	redBlackTree redBlackTreeRoot;
+	redBlackTree<int> redBlackTreeRoot;
 	for (int i = 0; i < nums.size(); ++i) {
 		redBlackTreeRoot.insert(nums[i]);
 	}

@@ -29,6 +29,8 @@ public:
 
 	void insert(T val) {
 		this->right = insert(this->right, val);
+		if (this->right)
+			this->right->color = treeNodeColor::Black;
 	}
 
 	void inorderTraversal() {
@@ -44,6 +46,8 @@ public:
 		redBlackTree* N = nullptr;
 		redBlackTree* t = this;
 		this->right = erase(t->right, val, t, N, flag);
+		if (this->right)
+			this->right->color = treeNodeColor::Black;
 	}
 private:
 	redBlackTree* singleRotateWithLeft(redBlackTree* K2) {

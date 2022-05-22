@@ -3,21 +3,21 @@
 #include <vector>
 using namespace std;
 
-typedef long long type; // 设定珂朵莉树的数据类型
+typedef long long ll;
 
 struct NODE {
 	int l, r;
-	mutable type val;
-	NODE(int l_ = -1, int r_ = -1, type val_ = 0) {
+	mutable ll val;
+	NODE(int l_ = -1, int r_ = -1, ll val_ = 0) {
 		l = l_, r = r_, val = val_;
 	}
 	bool operator < (const NODE& a) const {
 		return l < a.l;
 	}
 };
-typedef set<NODE>::iterator IT;
 
 class ChthollyTree {
+	typedef set<NODE>::iterator IT;
 	set<NODE> st;
 	IT split(int pos) {
 		IT it = st.lower_bound(NODE(pos));
@@ -29,42 +29,38 @@ class ChthollyTree {
 		return st.insert(NODE(pos, tmp.r, tmp.val)).first;
 	}
 
-	void assign(int l, int r, type val) {
+	void assign(int l, int r, ll val) {
 		IT itr = split(r + 1), itl = split(l);
 		st.erase(itl, itr);
 		st.insert(NODE(l, r, val));
 	}
 
-	void add(int l, int r, type val) {
+	void add(int l, int r, ll val) {
 		IT itr = split(r + 1), itl = split(l);
 		for (IT it = itl; it != itr; ++it) {
 			it->val += val;
 		}
 	}
 
-	type querySum(int l, int r) {
+	ll querySum(int l, int r) {
 		IT itr = split(r + 1), itl = split(l);
-		type res = 0;
+		ll res = 0;
 		for (IT it = itl; it != itr; ++it) {
 			res += (it->r - it->l + 1) * it->val;
 		}
 		return res;
 	}
 
-	type queryKth(int l, int r, int k) {
-		vector<pair<type, int>> vec(0);
+	ll queryKth(int l, int r, int k) {
+		vector< pair<ll, int> > vec(0);
 		IT itr = split(r + 1), itl = split(l);
 		for (IT it = itl; it != itr; ++it) {
 			vec.push_back(make_pair(it->val, it->r - it->l + 1));
 		}
 		sort(vec.begin(), vec.end());
-		for (vector<pair<type, int>>::iterator it = vec.begin(); it != vec.end(); ++it) {
+		for (vector< pair<ll, int> >::iterator it = vec.begin(); it != vec.end(); ++it) {
 			if ((k -= it->second) <= 0) return it->first;
 		}
 		return -1;
 	}
 };
-
-int main(void) {
-
-}

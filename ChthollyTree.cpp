@@ -17,8 +17,14 @@ struct NODE {
 };
 
 class ChthollyTree {
+public:
 	typedef set<NODE>::iterator IT;
 	set<NODE> st;
+
+	ChthollyTree() {
+		st.insert(NODE(INT_MIN, INT_MIN, LLONG_MAX)); // INT_MIN 一般用不到, 因此插入该节点, 防止首次split时越界
+	}
+
 	IT split(int pos) {
 		IT it = st.lower_bound(NODE(pos));
 		if (it != st.end() && it->l == pos) return it;

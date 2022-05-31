@@ -14,28 +14,29 @@ public:
 #define ls node * 2 + 1  // left son
 #define rs node * 2 + 2  // right son
 
-	const static int MaxN = 1e5 + 7;
+	typedef long long ll;
+	const static int MaxN = 2e5 + 7;
 	int n;
-	int tree[MaxN * 4];
+	ll tree[MaxN * 4];
 
-	static inline int _Add(const int& a, const int& b) { return a + b; }
-	static inline int _Max(const int& a, const int& b) { return max(a, b); }
-	static inline int _Min(const int& a, const int& b) { return min(a, b); }
-	int (*SegmentTreeFunc)(const int& a, const int& b) = _Add;
+	static inline ll _Add(const ll& a, const ll& b) { return a + b; }
+	static inline ll _Max(const ll& a, const ll& b) { return max(a, b); }
+	static inline ll _Min(const ll& a, const ll& b) { return min(a, b); }
+	ll(*SegmentTreeFunc)(const ll& a, const ll& b) = _Add;
 
-	void Build(int a[], int n) {
+	void Build(ll a[], int n) {
 		this->n = n;
 		_Build(a, 0, n - 1, 0);
 	}
 
-	void Updata(int idx, int val) { _Updata(idx, val, 0, n - 1, 0); }
+	void Updata(int idx, ll val) { _Updata(idx, val, 0, n - 1, 0); }
 
-	int Query(int L, int R) { return _Query(L, R, 0, n - 1, 0); }
+	ll Query(int L, int R) { return _Query(L, R, 0, n - 1, 0); }
 
 private:
 	void _PushUp(int node) { tree[node] = SegmentTreeFunc(tree[ls], tree[rs]); }
 
-	void _Build(int a[], int l, int r, int node) {
+	void _Build(ll a[], int l, int r, int node) {
 		if (l == r) {
 			tree[node] = a[l];
 			return;
@@ -46,7 +47,7 @@ private:
 		_PushUp(node);  // 左右子树建好以后就可以求当前节点的值了
 	}
 
-	void _Updata(int idx, int val, int start, int end, int node) {
+	void _Updata(int idx, ll val, int start, int end, int node) {
 		if (start == end) {
 			tree[node] = val;  // 修改树中的节点
 			return;
@@ -59,7 +60,7 @@ private:
 		_PushUp(node);
 	}
 
-	int _Query(int L, int R, int start, int end, int node) {
+	ll _Query(int L, int R, int start, int end, int node) {
 		if (R < start || L > end)  // 没有交集
 			return 0;
 		else if (start == end)  // 区间缩小到1时
